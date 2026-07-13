@@ -118,6 +118,9 @@ function Home() {
     const [listeningTarget, setListeningTarget] = useState(null) // { type: 'card' | 'session', id: string }
     const recognitionRef = useRef(null)
 
+    // ── Manual URL Input (scan tab fallback) ─────────────────────────
+    const [manualUrlInput, setManualUrlInput] = useState("")
+
     // ── Haptic feedback and Video Stream Hook ────────────────────────
     const haptic = useHapticFeedback()
 
