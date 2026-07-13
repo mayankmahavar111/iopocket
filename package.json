@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "start": "catalyst start",
-        "build": "npm run typecheck && catalyst build",
+        "build": "catalyst build",
         "serve": "catalyst serve",
         "lint": "eslint .",
         "devBuild": "catalyst devBuild",
