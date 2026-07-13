@@ -5,8 +5,8 @@
     "WEBPACK_DEV_SERVER_PORT": 3006,
     "BUILD_OUTPUT_PATH": "build",
     "PUBLIC_STATIC_ASSET_PATH": "/assets/",
-    "PUBLIC_STATIC_ASSET_URL": "http://localhost:3005",
-    "API_URL": "",
+    "PUBLIC_STATIC_ASSET_URL": "",
+    "API_URL": "https://iopocket-production.up.railway.app",
     "ANALYZE_BUNDLE": false,
     "CLIENT_ENV_VARIABLES": ["API_URL"],
     "SUPABASE_URL": "https://rdflifyxbrecgrewrnwr.supabase.co",
@@ -14,8 +14,9 @@
     "SESSION_SECRET": "7f55b11a5806c9febe78b9b4f981dd4e",
     "DISABLE_LOGIN": "true",
     "WEBVIEW_CONFIG": {
-        "LOCAL_IP": "localhost",
-        "port": "3005",
+        "LOCAL_IP": "iopocket-production.up.railway.app",
+        "port": 443,
+        "useHttps": true,
         "appInfo": "",
         "android": {
             "buildType": "debug"
