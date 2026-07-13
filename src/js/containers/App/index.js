@@ -3,11 +3,18 @@ import { Outlet } from "@tata1mg/router"
 import { ShieldAlert } from "lucide-react"
 
 const App = () => {
+    const [mounted, setMounted] = useState(false)
     const [isNativeApp, setIsNativeApp] = useState(true) // default to true for SSR/first render
 
     useEffect(() => {
+        setMounted(true)
         const detectNative = () => {
             if (typeof window === "undefined") return false;
+            
+            // If ONLY_NATIVE is not set to true, allow access on web
+            if (process.env.ONLY_NATIVE !== "true") {
+                return true;
+            }
             
             // Bypass restriction for local dev/testing in browser
             if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
@@ -23,7 +30,8 @@ const App = () => {
         setIsNativeApp(detectNative())
     }, [])
 
-    if (!isNativeApp) {
+    // Hydration safety: during SSR and before mounting, render Outlet as normal
+    if (mounted && !isNativeApp) {
         return (
             <div style={{
                 display: "flex",
