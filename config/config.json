@@ -9,6 +9,10 @@
     "API_URL": "",
     "ANALYZE_BUNDLE": false,
     "CLIENT_ENV_VARIABLES": ["API_URL"],
+    "SUPABASE_URL": "https://rdflifyxbrecgrewrnwr.supabase.co",
+    "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkZmxpZnl4YnJlY2dyZXdybndyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDM5MzAxNiwiZXhwIjoyMDg1OTY5MDE2fQ.MhC5PiNclq0Rh7tO3I3r0cCacsm4MVJAooNJLlkzybE",
+    "SESSION_SECRET": "7f55b11a5806c9febe78b9b4f981dd4e",
+    "DISABLE_LOGIN": "true",
     "WEBVIEW_CONFIG": {
         "LOCAL_IP": "localhost",
         "port": "3005",

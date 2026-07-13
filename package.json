@@ -14,7 +14,7 @@
         "setupEmulator": "catalyst setupEmulator",
         "setupEmulator:ios": "catalyst setupEmulator:ios",
         "setupEmulator:android": "catalyst setupEmulator:android",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "node node_modules/typescript7/bin/tsc --noEmit"
     },
     "_moduleAliases": {
         "@api": "api.js",
@@ -28,14 +28,19 @@
     "dependencies": {
         "@loadable/component": "^5.16.3",
         "@reduxjs/toolkit": "^2.9.0",
+        "@supabase/supabase-js": "^2.109.0",
         "@tailwindcss/postcss": "^4.1.4",
         "@tata1mg/router": "0.1.0-beta",
         "catalyst-core": "0.2.0-beta.2",
+        "cookie-parser": "^1.4.7",
+        "express-session": "^1.19.0",
+        "lucide-react": "^0.300.0",
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-redux": "^9.2.0",
         "redux": "^5.0.1",
-        "tailwindcss": "^4.1.4"
+        "tailwindcss": "^4.1.4",
+        "@zxing/library": "^0.20.0"
     },
     "devDependencies": {
         "@types/react": "^19.0.0",
@@ -43,7 +48,8 @@
         "eslint": "^8.26.0",
         "eslint-plugin-react": "^7.34.1",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "typescript7": "npm:typescript@^7.0.2"
     },
     "overrides": {
         "react-helmet-async": {

@@ -1,0 +1,17 @@
+{
+    "name": "IO Pocket - Google I/O QR Companion",
+    "short_name": "IO Pocket",
+    "description": "Progressive Web App QR companion for Google I/O.",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f172a",
+    "theme_color": "#1e293b",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        }
+    ]
+}
