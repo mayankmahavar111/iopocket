@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { Outlet } from "@tata1mg/router"
 import { ShieldAlert } from "lucide-react"
+import { useDeviceInfo } from "catalyst-core/hooks"
 
 const App = () => {
-    const [mounted, setMounted] = useState(false)
-    const [isNativeApp, setIsNativeApp] = useState(true) // default to true for SSR/first render
+    // useDeviceInfo provides isNative (true when NativeBridge is available in a native webview)
+    // and isWeb (true when running in a plain browser).
+    // During SSR, isNative is computed from NativeBridge.isAvailable() which returns false server-side,
+    // but the hook's internal state starts safe so no gate fires during SSR hydration.
+    const { isNative, loading: deviceInfoLoading } = useDeviceInfo()
 
-    useEffect(() => {
-        setMounted(true)
-        const detectNative = () => {
-            if (typeof window === "undefined") return false;
-            
-            // If ONLY_NATIVE is not set to true, allow access on web
-            if (process.env.ONLY_NATIVE !== "true") {
-                return true;
-            }
-            
-            // Bypass restriction for local dev/testing in browser
-            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-                return true;
-            }
-            
-            // Check for WebBridge and NativeBridge
-            const hasWebBridge = !!window.WebBridge;
-            const hasNativeBridge = !!(window.NativeBridge || window.webkit?.messageHandlers?.NativeBridge);
-            
-            return hasWebBridge && hasNativeBridge;
-        }
-        setIsNativeApp(detectNative())
-    }, [])
+    // If ONLY_NATIVE env flag is not enabled, always allow web access.
+    // This lets you open the PWA in a regular browser for demos/testing.
+    if (process.env.ONLY_NATIVE !== "true") {
+        return (
+            <>
+                <Outlet />
+            </>
+        )
+    }
 
-    // Hydration safety: during SSR and before mounting, render Outlet as normal
-    if (mounted && !isNativeApp) {
+    // While device info is still resolving (SSR/first paint), render the outlet
+    // to avoid a flash of the "Access Restricted" screen on native.
+    if (deviceInfoLoading) {
+        return (
+            <>
+                <Outlet />
+            </>
+        )
+    }
+
+    // Block access if we're not inside a native Catalyst webview
+    if (!isNative) {
         return (
             <div style={{
                 display: "flex",
@@ -58,13 +58,13 @@ const App = () => {
                 }}>
                     <ShieldAlert size={48} />
                 </div>
-                
+
                 <h1 style={{ fontSize: "36px", fontWeight: "800", marginBottom: "8px" }}>404</h1>
                 <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#ef4444", marginBottom: "16px" }}>
                     Access Restricted
                 </h2>
                 <p style={{ fontSize: "14px", color: "#94a3b8", maxWidth: "380px", lineHeight: "1.6", marginBottom: "32px" }}>
-                    This application is a companion utility designed to be accessed exclusively through the 
+                    This application is a companion utility designed to be accessed exclusively through the
                     <strong style={{ color: "#f8fafc" }}> IO Pocket Native Mobile App</strong>.
                 </p>
                 <div style={{
