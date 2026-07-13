@@ -6,6 +6,7 @@ import { Provider } from "react-redux"
 import { RouterProvider } from "@tata1mg/router"
 import clientRouter from "catalyst-core/router/ClientRouter"
 import configureStore from "@store"
+import WebBridge from "catalyst-core/WebBridge";
 
 window.addEventListener("load", () => {
     loadableReady(() => {
@@ -21,6 +22,7 @@ window.addEventListener("load", () => {
                 </React.StrictMode>
             </Provider>
         )
+        WebBridge.init();
 
         const container = document.getElementById("app")
         hydrateRoot(container, Application)
