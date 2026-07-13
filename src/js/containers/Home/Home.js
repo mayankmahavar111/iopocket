@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import { Link, useLocation, useNavigate } from "@tata1mg/router"
 import {
     QrCode,
     BookOpen,
@@ -24,7 +25,8 @@ import {
     FileText,
     RefreshCw,
     Edit2,
-    Check
+    Check,
+    HelpCircle
 } from "lucide-react"
 import { useVideoStream, useHapticFeedback } from "catalyst-core/hooks"
 import { BrowserQRCodeReader } from "@zxing/library"
@@ -71,8 +73,16 @@ const getStatusColor = (status) => {
 }
 
 function Home() {
-    // ── Navigation & System ──────────────────────────────────────────
-    const [activeTab, setActiveTab] = useState("library") // 'library' | 'scan' | 'schedule'
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    // Determine active tab from URL path
+    let activeTab = "library"
+    if (location.pathname === "/scan") {
+        activeTab = "scan"
+    } else if (location.pathname === "/schedule") {
+        activeTab = "schedule"
+    }
     const [darkMode, setDarkMode] = useState(false)
     const [scanResultToast, setScanResultToast] = useState(null)
     const toastTimeoutRef = useRef(null)
@@ -1544,41 +1554,64 @@ function Home() {
             )}
 
             {/* Bottom Tab Bar */}
-            <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-2.5 px-6 flex justify-around items-center z-40 max-w-lg mx-auto shadow-lg">
+            <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-2 px-4 flex justify-around items-center z-40 max-w-lg mx-auto shadow-lg">
                 {/* Library Tab */}
-                <button
-                    onClick={() => setActiveTab("library")}
-                    className={`flex flex-col items-center space-y-1 transition duration-150 ${
+                <Link
+                    to="/library"
+                    className={`flex flex-col items-center space-y-0.5 transition duration-150 ${
                         activeTab === "library" ? "text-blue-500" : "text-slate-400 dark:text-slate-500 hover:text-slate-600"
                     }`}
+                    style={{ textDecoration: "none" }}
                 >
                     <BookOpen className="h-5 w-5" />
-                    <span className="text-[10px] font-bold">Library</span>
-                </button>
+                    <span className="text-[9px] font-bold">Library</span>
+                </Link>
+
+                {/* Schedule Tab */}
+                <Link
+                    to="/schedule"
+                    className={`flex flex-col items-center space-y-0.5 transition duration-150 ${
+                        activeTab === "schedule" ? "text-blue-500" : "text-slate-400 dark:text-slate-500 hover:text-slate-600"
+                    }`}
+                    style={{ textDecoration: "none" }}
+                >
+                    <Calendar className="h-5 w-5" />
+                    <span className="text-[9px] font-bold">Schedule</span>
+                </Link>
 
                 {/* Scan Button (Floating accent) */}
-                <button
-                    onClick={() => setActiveTab("scan")}
-                    className={`flex flex-col items-center justify-center w-14 h-14 rounded-full -mt-6 shadow-xl transition-all duration-200 scale-100 hover:scale-105 active:scale-95 z-50 ${
+                <Link
+                    to="/scan"
+                    className={`flex flex-col items-center justify-center w-12 h-12 rounded-full -mt-5 shadow-xl transition-all duration-200 scale-100 hover:scale-105 active:scale-95 z-50 ${
                         activeTab === "scan" 
                             ? "bg-red-500 text-white ring-4 ring-red-100 dark:ring-red-950/30" 
                             : "bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-950/30"
                     }`}
+                    style={{ textDecoration: "none" }}
                     aria-label="Scan QR Code"
                 >
                     <QrCode className="h-6 w-6" />
-                </button>
+                </Link>
 
-                {/* Schedule Tab */}
-                <button
-                    onClick={() => setActiveTab("schedule")}
-                    className={`flex flex-col items-center space-y-1 transition duration-150 ${
-                        activeTab === "schedule" ? "text-blue-500" : "text-slate-400 dark:text-slate-500 hover:text-slate-600"
-                    }`}
+                {/* Venue Tab */}
+                <Link
+                    to="/venue"
+                    className="flex flex-col items-center space-y-0.5 transition duration-150 text-slate-400 dark:text-slate-500 hover:text-slate-600"
+                    style={{ textDecoration: "none" }}
                 >
-                    <Calendar className="h-5 w-5" />
-                    <span className="text-[10px] font-bold">Schedule</span>
-                </button>
+                    <MapPin className="h-5 w-5" />
+                    <span className="text-[9px] font-bold">Venue</span>
+                </Link>
+
+                {/* FAQs Tab */}
+                <Link
+                    to="/faq"
+                    className="flex flex-col items-center space-y-0.5 transition duration-150 text-slate-400 dark:text-slate-500 hover:text-slate-600"
+                    style={{ textDecoration: "none" }}
+                >
+                    <HelpCircle className="h-5 w-5" />
+                    <span className="text-[9px] font-bold">FAQs</span>
+                </Link>
             </nav>
         </div>
     )
